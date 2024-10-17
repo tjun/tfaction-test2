@@ -1,0 +1,33 @@
+name: List
+on:
+  pull_request:
+    paths:
+      - terraform/**
+
+concurrency:
+  group: ${{ github.workflow }}--${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  AQUA_CONFIG: "${{ github.workspace }}/aqua.yaml"
+  TFACTION_CONFIG: "${{ github.workspace }}/tfaction-root.yaml"
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      targets: ${{ steps.list-targets.outputs.targets }}
+
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+      - uses: aquaproj/aqua-installer@4551ec64e21bf0f557c2525135ff0bd2cba40ec7 # v3.0.0
+        with:
+          aqua_version: v2.27.3
+      - id: list-targets
+        uses: suzuki-shunsuke/tfaction/list-targets@53097591cf15d9eefd7ee9af0511c536e71e9a67 # v1.7.0
+      - run: echo "targets=$(cat steps.list-targets.outputs.targets)"
+
