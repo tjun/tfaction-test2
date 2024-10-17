@@ -1,0 +1,69 @@
+---
+plan_workflow_name: "Plan"
+
+draft_pr: true # default is false. If `draft_pr` is true, tfaction creates pull requests as draft
+base_working_directory: "" # default is empty, which means the current directory
+working_directory_file: .tfaction.yaml # default is "tfaction.yaml"
+
+# conftest_policy_directory: tfaction >= v1.1.0
+# conftest_policy_directory is the file path to the conftest policy directory.
+# The default value is "policy".
+# If conftest_policy_directory isn't set and the directory policy doesn't exist, contest is skipped.
+# If conftest_policy_directory is set but the directory doesn't exist, the action fails.
+# conftest_policy_directory: terraform/policy
+
+# renovate_login: 'renovate[bot]' # default is "renovate[bot]"
+# label_prefixes:
+#   target: "terraform-target:" # default is "target:"
+#   tfmigrate: "terraform-tfmigrate:" # default is "tfmigrate:"
+#   skip: "terraform-skip:" # default is "skip:"
+
+# aqua:
+#   update_checksum:
+#     # Update aqua-checksums.json in `setup` action
+#     enabled: true # default is false
+#     skip_push: false # default is false
+#     prune: true # default is false
+
+# tfaction >= v1.3.0
+# https://suzuki-shunsuke.github.io/tfaction/docs/feature/local-path-module
+# https://github.com/suzuki-shunsuke/tfaction/pull/1528
+update_local_path_module_caller:
+  enabled: true
+
+env:
+  TF_CLI_ARGS_plan: "-parallelism=50"
+  TF_CLI_ARGS_apply: "-parallelism=50"
+
+# https://github.com/suzuki-shunsuke/tfaction/pull/1106
+# tfsec:
+#   enabled: true
+tflint:
+  enabled: true
+trivy:
+  enabled: true
+
+# We don't recommend disabling this feature.
+# update_related_pull_requests:
+#   enabled: false
+
+# tfaction >= v0.5.25
+# https://github.com/suzuki-shunsuke/tfaction/pull/910
+# scaffold_working_directory:
+#   skip_adding_aqua_packages: true
+
+# tfaction >= v0.6.0
+drift_detection:
+  enabled: false
+  # issue_repo_owner: suzuki-shunsuke
+  # issue_repo_name: tfaction-example
+  # num_of_issues: 1
+  # minimum_detection_interval: 1
+
+terraform_command: terraform
+
+target_groups:
+  - working_directory: terraform/services/
+    target: service/
+  - working_directory: terraform/
+    target: root/

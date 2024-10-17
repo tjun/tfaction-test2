@@ -1,0 +1,14 @@
+checksum:
+  enabled: true
+  require_checksum: false
+registries:
+  - type: standard
+    ref: v4.225.0 # renovate: depName=aquaproj/aqua-registry
+packages:
+  - name: hashicorp/terraform@v1.9.7
+  - name: suzuki-shunsuke/ci-info@v2.3.0
+  - name: suzuki-shunsuke/github-comment@v6.2.0
+  - name: suzuki-shunsuke/tfaction-go@v0.2.3
+  - name: suzuki-shunsuke/tfcmt@v4.13.0
+  - name: hashicorp/terraform-config-inspect
+    version: 4708120f8f300bd8553ebca22bc6acd10e4a555a
