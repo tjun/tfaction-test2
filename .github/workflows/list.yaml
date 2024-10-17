@@ -28,6 +28,6 @@ jobs:
         with:
           aqua_version: v2.27.3
       - id: list-targets
-        uses: suzuki-shunsuke/tfaction/list-targets@53097591cf15d9eefd7ee9af0511c536e71e9a67 # v1.7.0
+        uses: suzuki-shunsuke/tfaction/list-targets@v1.5.2
       - run: echo "targets=${{ steps.list-targets.outputs.targets }}"
 
